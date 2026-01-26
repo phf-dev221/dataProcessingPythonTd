@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataFlow - Nettoyage Intelligent de Données</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="bi bi-graph-up-arrow me-2 fs-4"></i>
+                <span class="fw-bold">DataFlow</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Fonctionnalités</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">Comment ça marche</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">À propos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="badge bg-gradient rounded-pill px-4 py-2 mb-4">
+                        <i class="bi bi-stars me-2"></i>Nettoyage Intelligent
+                    </span>
+                    <h1 class="display-2 fw-bold mb-4">
+                        Transformez vos données
+                        <span class="gradient-text">en secondes</span>
+                    </h1>
+                    <p class="lead mb-5 text-muted">
+                        Uploadez vos fichiers CSV, Excel, JSON ou XML et obtenez des données parfaitement nettoyées instantanément. 
+                        Plus de doublons, plus de valeurs manquantes, juste des données prêtes à l'emploi.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#upload" class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Commencer maintenant
+                        </a>
+                        <a href="#how-it-works" class="btn btn-outline-secondary btn-lg px-5 py-3 rounded-pill">
+                            <i class="bi bi-play-circle me-2"></i>Voir la démo
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="row mt-5 pt-4">
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-0">10K+</h3>
+                            <p class="text-muted small">Fichiers traités</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-0">99.9%</h3>
+                            <p class="text-muted small">Précision</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-0">&lt;2s</h3>
+                            <p class="text-muted small">Temps moyen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="hero-image-wrapper">
+                        <div class="floating-card card-1">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <span>Doublons supprimés</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="bi bi-graph-up text-primary"></i>
+                            <span>Données optimisées</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="bi bi-shield-check text-info"></i>
+                            <span>100% Sécurisé</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" 
+                             alt="Data Analytics" 
+                             class="img-fluid rounded-4 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Background -->
+        <div class="hero-bg">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+    </section>
+
+    <!-- Messages Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-5 pt-5">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                        <i class="bi bi-{{ 'check-circle-fill' if category == 'success' else 'exclamation-triangle-fill' }} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Upload Section -->
+    <section class="py-5 my-5" id="upload">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="zoom-in">
+                    <div class="upload-card card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-5">
+                                <div class="upload-icon mb-4">
+                                    <i class="bi bi-cloud-upload"></i>
+                                </div>
+                                <h2 class="fw-bold mb-3">Uploadez votre fichier</h2>
+                                <!-- ✅ CORRECTION 1 : Formats supportés mis à jour -->
+                                <p class="text-muted">Formats supportés : CSV, XLSX, XLS, JSON, XML (Max 16 MB)</p>
+                            </div>
+                            
+                            <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
+                                <div class="upload-area" id="uploadArea">
+                                    <!-- ✅ CORRECTION 2 : Accepter tous les formats -->
+                                    <input type="file" name="file" id="fileInput" accept=".csv,.xlsx,.xls,.json,.xml" required hidden>
+                                    <label for="fileInput" class="upload-label">
+                                        <div class="upload-content">
+                                            <i class="bi bi-file-earmark-arrow-up display-1 text-primary mb-3"></i>
+                                            <h5 class="mb-2">Glissez-déposez votre fichier ici</h5>
+                                            <p class="text-muted mb-3">ou</p>
+                                            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('fileInput').click()">
+                                                Parcourir les fichiers
+                                            </button>
+                                        </div>
+                                    </label>
+                                    <div class="file-info" id="fileInfo" style="display: none;">
+                                        <i class="bi bi-file-earmark-check text-success fs-1 mb-3"></i>
+                                        <p class="fw-bold mb-1" id="fileName"></p>
+                                        <p class="text-muted small" id="fileSize"></p>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearFile()">
+                                            <i class="bi bi-x-circle me-1"></i>Supprimer
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4 py-3 rounded-pill" id="submitBtn" disabled>
+                                    <i class="bi bi-magic me-2"></i>Nettoyer mes données
+                                </button>
+                            </form>
+                            
+                            <!-- Progress Bar -->
+                            <div class="progress mt-4" id="progressBar" style="display: none; height: 8px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                                     role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light" id="features">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-4 py-2 mb-3">
+                    Fonctionnalités
+                </span>
+                <h2 class="display-4 fw-bold mb-3">Pourquoi choisir DataFlow ?</h2>
+                <p class="lead text-muted">Des outils puissants pour des données parfaites</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-primary bg-opacity-10">
+                            <i class="bi bi-arrow-repeat text-primary"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Suppression des doublons</h4>
+                        <p class="text-muted">Identifie et élimine automatiquement toutes les lignes dupliquées pour garantir l'unicité de vos données.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-success bg-opacity-10">
+                            <i class="bi bi-droplet text-success"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Nettoyage intelligent</h4>
+                        <p class="text-muted">Supprime les espaces superflus, corrige les formats et standardise vos données automatiquement.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-warning bg-opacity-10">
+                            <i class="bi bi-patch-question text-warning"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Gestion des valeurs manquantes</h4>
+                        <p class="text-muted">Remplit intelligemment les valeurs manquantes avec des moyennes ou supprime les lignes vides.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon bg-info bg-opacity-10">
+                            <i class="bi bi-lightning-charge text-info"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Traitement ultra-rapide</h4>
+                        <p class="text-muted">Algorithmes optimisés pour traiter même les fichiers volumineux en quelques secondes seulement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-5 my-5" id="how-it-works">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Comment ça marche ?</h2>
+                <p class="lead text-muted">Trois étapes simples pour des données parfaites</p>
+            </div>
+            
+            <div class="row g-5">
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center">
+                        <div class="step-number">1</div>
+                        <div class="step-icon mb-4">
+                            <i class="bi bi-upload"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Uploadez votre fichier</h4>
+                        <p class="text-muted">Glissez-déposez ou sélectionnez votre fichier CSV, Excel, JSON ou XML depuis votre ordinateur.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <div class="step-number">2</div>
+                        <div class="step-icon mb-4">
+                            <i class="bi bi-gear-fill"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Traitement automatique</h4>
+                        <p class="text-muted">Notre algorithme analyse et nettoie vos données en supprimant doublons et erreurs.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center">
+                        <div class="step-number">3</div>
+                        <div class="step-icon mb-4">
+                            <i class="bi bi-download"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Téléchargez le résultat</h4>
+                        <p class="text-muted">Récupérez instantanément votre fichier nettoyé, prêt à être utilisé pour vos analyses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Formats Section -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="display-5 fw-bold mb-4">Formats supportés</h2>
+                    <p class="lead mb-4">DataFlow supporte les formats de fichiers les plus populaires</p>
+                    <!-- ✅ CORRECTION 3 : Ajout des badges JSON et XML -->
+                    <div class="d-flex gap-3 flex-wrap mb-4">
+                        <span class="badge bg-primary bg-opacity-25 text-white px-4 py-3 fs-6">
+                            <i class="bi bi-filetype-csv me-2"></i>CSV
+                        </span>
+                        <span class="badge bg-success bg-opacity-25 text-white px-4 py-3 fs-6">
+                            <i class="bi bi-file-earmark-excel me-2"></i>XLSX
+                        </span>
+                        <span class="badge bg-info bg-opacity-25 text-white px-4 py-3 fs-6">
+                            <i class="bi bi-file-earmark-spreadsheet me-2"></i>XLS
+                        </span>
+                        <span class="badge bg-warning bg-opacity-25 text-white px-4 py-3 fs-6">
+                            <i class="bi bi-filetype-json me-2"></i>JSON
+                        </span>
+                        <span class="badge bg-danger bg-opacity-25 text-white px-4 py-3 fs-6">
+                            <i class="bi bi-filetype-xml me-2"></i>XML
+                        </span>
+                    </div>
+                    <p class="text-white-50">
+                        <i class="bi bi-shield-check me-2"></i>
+                        Taille maximale : 16 MB • Sécurisé et confidentiel
+                    </p>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="card bg-white bg-opacity-10 border-0 backdrop-blur">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4">Statistiques en temps réel</h5>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        <span>Lignes traitées</span>
+                                    </div>
+                                    <h3 class="fw-bold mb-0">1.2M+</h3>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-trash-fill text-danger me-2"></i>
+                                        <span>Doublons supprimés</span>
+                                    </div>
+                                    <h3 class="fw-bold mb-0">350K+</h3>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-graph-up text-info me-2"></i>
+                                        <span>Taux de réussite</span>
+                                    </div>
+                                    <h3 class="fw-bold mb-0">99.9%</h3>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-clock-fill text-warning me-2"></i>
+                                        <span>Temps moyen</span>
+                                    </div>
+                                    <h3 class="fw-bold mb-0">1.8s</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="fw-bold mb-3">
+                        <i class="bi bi-graph-up-arrow me-2"></i>DataFlow
+                    </h4>
+                    <p class="text-white-50">
+                        La solution de nettoyage de données la plus rapide et la plus fiable pour les professionnels.
+                    </p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">Fonctionnalités</a></li>
+                        <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">À propos</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i>contact@dataflow.com</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i>+221 XX XXX XX XX</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>Dakar, Sénégal</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2026 DataFlow - Projet ISI M1 DSIA. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

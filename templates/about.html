@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - DataFlow</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="bi bi-graph-up-arrow me-2 fs-4"></i>
+                <span class="fw-bold">DataFlow</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Fonctionnalités</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#how-it-works">Comment ça marche</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/about">À propos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-2 fw-bold mb-4 text-white">
+                        À propos de
+                        <span class="gradient-text">DataFlow</span>
+                    </h1>
+                    <p class="lead text-white mb-4">
+                        Une solution innovante de nettoyage de données développée dans le cadre du projet académique ISI M1 DSIA.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="/" class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                            <i class="bi bi-arrow-left me-2"></i>Retour à l'accueil
+                        </a>
+                        <a href="#mission" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+                            <i class="bi bi-arrow-down me-2"></i>En savoir plus
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="about-illustration">
+                        <i class="bi bi-code-square display-1 text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Background -->
+        <div class="hero-bg">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-5 my-5" id="mission">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                    <div class="mission-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" 
+                             alt="Mission" 
+                             class="img-fluid rounded-4 shadow-lg">
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-4 py-2 mb-3">
+                        Notre Mission
+                    </span>
+                    <h2 class="display-4 fw-bold mb-4">Simplifier le nettoyage de données</h2>
+                    <p class="lead text-muted mb-4">
+                        DataFlow a été conçu pour résoudre un problème courant : le nettoyage fastidieux des données. 
+                        Notre objectif est de rendre ce processus simple, rapide et accessible à tous.
+                    </p>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small bg-primary bg-opacity-10 me-3">
+                                    <i class="bi bi-lightning-charge text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Rapidité</h5>
+                                    <p class="text-muted mb-0">Traitement en moins de 2 secondes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small bg-success bg-opacity-10 me-3">
+                                    <i class="bi bi-shield-check text-success"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Fiabilité</h5>
+                                    <p class="text-muted mb-0">99.9% de précision</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small bg-info bg-opacity-10 me-3">
+                                    <i class="bi bi-gear-fill text-info"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Simplicité</h5>
+                                    <p class="text-muted mb-0">Interface intuitive</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon-small bg-warning bg-opacity-10 me-3">
+                                    <i class="bi bi-stars text-warning"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Innovation</h5>
+                                    <p class="text-muted mb-0">Algorithmes optimisés</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-4 py-2 mb-3">
+                    Technologies
+                </span>
+                <h2 class="display-4 fw-bold mb-3">Stack Technique</h2>
+                <p class="lead text-muted">Les technologies utilisées pour créer DataFlow</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="tech-card text-center h-100">
+                        <div class="tech-icon mb-4">
+                            <i class="bi bi-filetype-py"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Flask</h4>
+                        <p class="text-muted">Framework web Python minimaliste et puissant</p>
+                        <span class="badge bg-primary bg-opacity-10 text-primary">Backend</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="tech-card text-center h-100">
+                        <div class="tech-icon mb-4">
+                            <i class="bi bi-table"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Pandas</h4>
+                        <p class="text-muted">Manipulation et analyse de données tabulaires</p>
+                        <span class="badge bg-success bg-opacity-10 text-success">Data Processing</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="tech-card text-center h-100">
+                        <div class="tech-icon mb-4">
+                            <i class="bi bi-bootstrap"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Bootstrap 5</h4>
+                        <p class="text-muted">Framework CSS moderne pour l'interface</p>
+                        <span class="badge bg-info bg-opacity-10 text-info">Frontend</span>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="tech-card text-center h-100">
+                        <div class="tech-icon mb-4">
+                            <i class="bi bi-braces"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">JavaScript</h4>
+                        <p class="text-muted">Interactions dynamiques et animations</p>
+                        <span class="badge bg-warning bg-opacity-10 text-warning">Frontend</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5 my-5">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-4 py-2 mb-3">
+                    Équipe
+                </span>
+                <h2 class="display-4 fw-bold mb-3">Développé avec passion</h2>
+                <p class="lead text-muted">Projet académique ISI M1 DSIA 2025-2026</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="team-card text-center">
+                        <div class="team-avatar mb-4">
+                            <i class="bi bi-person-circle display-1 text-primary"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Étudiant ISI M1 DSIA</h4>
+                        <p class="text-muted mb-4">Data Science & Intelligence Artificielle</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">
+                                <i class="bi bi-github me-2"></i>GitHub
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill">
+                                <i class="bi bi-linkedin me-2"></i>LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Detailed Section -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold mb-3">Fonctionnalités de nettoyage</h2>
+                <p class="lead text-white-50">Ce que DataFlow fait pour vos données</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">01</div>
+                        <h4 class="fw-bold mb-3">Suppression des doublons</h4>
+                        <p class="text-white-50">
+                            Identifie et supprime toutes les lignes dupliquées basées sur l'ensemble des colonnes, 
+                            garantissant l'unicité de vos enregistrements.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">02</div>
+                        <h4 class="fw-bold mb-3">Gestion des valeurs manquantes</h4>
+                        <p class="text-white-50">
+                            Remplit intelligemment les valeurs manquantes numériques avec la moyenne de la colonne, 
+                            et supprime les lignes totalement vides.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">03</div>
+                        <h4 class="fw-bold mb-3">Nettoyage du texte</h4>
+                        <p class="text-white-50">
+                            Supprime les espaces superflus en début et fin de chaîne pour toutes les colonnes textuelles, 
+                            standardisant le format.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">04</div>
+                        <h4 class="fw-bold mb-3">Validation des formats</h4>
+                        <p class="text-white-50">
+                            Vérifie et valide automatiquement les formats de fichiers supportés (CSV, XLSX, XLS) 
+                            avant le traitement.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">05</div>
+                        <h4 class="fw-bold mb-3">Statistiques détaillées</h4>
+                        <p class="text-white-50">
+                            Fournit des statistiques complètes sur le nettoyage : nombre de lignes avant/après, 
+                            doublons supprimés.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-detail-card">
+                        <div class="feature-number">06</div>
+                        <h4 class="fw-bold mb-3">Export optimisé</h4>
+                        <p class="text-white-50">
+                            Exporte les données nettoyées dans le même format que le fichier d'origine, 
+                            prêtes pour vos analyses.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 my-5">
+        <div class="container">
+            <div class="cta-card text-center" data-aos="zoom-in">
+                <h2 class="display-4 fw-bold mb-4 text-white">Prêt à nettoyer vos données ?</h2>
+                <p class="lead text-white mb-5">
+                    Commencez dès maintenant et découvrez la puissance de DataFlow
+                </p>
+                <a href="/" class="btn btn-light btn-lg px-5 py-3 rounded-pill">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Essayer gratuitement
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="fw-bold mb-3">
+                        <i class="bi bi-graph-up-arrow me-2"></i>DataFlow
+                    </h4>
+                    <p class="text-white-50">
+                        La solution de nettoyage de données la plus rapide et la plus fiable pour les professionnels.
+                    </p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Accueil</a></li>
+                        <li class="mb-2"><a href="/#features" class="text-white-50 text-decoration-none">Fonctionnalités</a></li>
+                        <li class="mb-2"><a href="/about" class="text-white-50 text-decoration-none">À propos</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i>contact@dataflow.com</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i>+221 XX XXX XX XX</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>Dakar, Sénégal</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2026 DataFlow - Projet ISI M1 DSIA. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
