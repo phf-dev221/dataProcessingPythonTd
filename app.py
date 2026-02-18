@@ -25,9 +25,18 @@ migrate.init_app(app, db)
 
 jwt = JWTManager(app)
 
+from flask_cors import CORS
+
 CORS(
     app,
-    resources={r"/*": {"origins": "http://localhost:5173"}},
+    resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173",
+                "https://dataprocessingpythontd.onrender.com"
+            ]
+        }
+    },
     supports_credentials=True
 )
 
