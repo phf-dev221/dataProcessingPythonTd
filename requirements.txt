@@ -8,4 +8,4 @@ flask-sqlalchemy
 flask-migrate
 pymysql
 gunicorn
-
+psycopg2-binary
