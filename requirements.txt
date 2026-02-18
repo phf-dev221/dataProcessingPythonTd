@@ -7,3 +7,5 @@ pytest
 flask-sqlalchemy
 flask-migrate
 pymysql
+gunicorn
+
