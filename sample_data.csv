@@ -1,8 +1,9 @@
 Name,Age,Salary,Department
 Alice,28,60000,HR
 Bob,34,,Engineering
-Charlie,42,85000,Engineering
+Charlie,42,trrr,Engineering
 Diana,30,62000,Marketing
 Alice,28,60000,HR
-Eve,,75000,
-Frank,,"not a number",Sales
+"",,75000,
+Frank,,"",Sales
+Alice,29,60000,HR

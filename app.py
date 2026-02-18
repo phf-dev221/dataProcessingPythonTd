@@ -1,47 +1,50 @@
+from flask import Flask
+from flask_cors import CORS
+from config import Config
+from database import db, migrate
+from flask_jwt_extended import JWTManager
 
-import os
-from flask import Flask, request, jsonify
-import pandas as pd
-from dotenv import load_dotenv
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+import sqlite3
 
-load_dotenv()
+from models.user import User
+from models.history import History
+
+from routes.auth import auth_bp
+from routes.files import files_bp
+from routes.history import history_bp
+from routes.stats import stats_bp
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('API_SECRET_KEY')
+app.config.from_object(Config)
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+# Initialise db et migrate
+db.init_app(app)
+migrate.init_app(app, db)
 
-    try:
-        df = pd.read_csv(file)
-        
-        missing_values_before = df.isnull().sum().to_dict()
-        
-        df.drop_duplicates(inplace=True)
-        
-        column_to_correct = request.form.get('column_to_correct')
-        if column_to_correct and column_to_correct in df.columns:
-            df[column_to_correct] = pd.to_numeric(df[column_to_correct], errors='coerce')
-            
-        for col in df.select_dtypes(include=['number']).columns:
-            df[col].fillna(df[col].mean(), inplace=True)
-            
-        cleaned_head = df.head().to_dict(orient='records')
-        data_summary = df.describe().to_dict()
+jwt = JWTManager(app)
 
-        return jsonify({
-            'message': 'File processed successfully',
-            'original_missing_values': missing_values_before,
-            'cleaned_data_head': cleaned_head,
-            'data_summary': data_summary
-        })
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+CORS(
+    app,
+    resources={r"/*": {"origins": "http://localhost:5173"}},
+    supports_credentials=True
+)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    if isinstance(dbapi_connection, sqlite3.Connection):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA busy_timeout=30000")
+        cursor.close()
+
+# Blueprints
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(files_bp, url_prefix='/files')
+app.register_blueprint(stats_bp, url_prefix='/stats')
+app.register_blueprint(history_bp, url_prefix='/history')
+
+
+if __name__ == "__main__":
+    app.run(debug=True, use_reloader=False)

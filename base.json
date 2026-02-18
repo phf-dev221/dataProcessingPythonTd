@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "",
+    "age": 28,
+    "salary": 60000,
+    "hire_date": "2020-03-15",
+    "department": "HR",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Bob Smith",
+    "age": "invalid",
+    "salary": 54,
+    "hire_date": "2019-07-22",
+    "department": "Engineering",
+    "active": true
+  },
+  {
+    "id": 3,
+    "name": "Charlie Brown",
+    "age": 42,
+    "salary": 76,
+    "hire_date": "2018-11-05",
+    "department": "Engineering",
+    "active": false
+  },
+  {
+    "id": 4,
+    "name": "Diana Prince",
+    "age": 30,
+    "salary": 62000,
+    "hire_date": "not a date",
+    "department": "Marketing",
+    "active": true
+  },
+  {
+    "id": 5,
+    "name": "Eve Adams",
+    "age": 28,
+    "salary": "not a number",
+    "hire_date": "2021-01-10",
+    "department": "HR",
+    "active": true
+  },
+  {
+    "id": 6,
+    "name": null,
+    "age": null,
+    "salary": 75000,
+    "hire_date": "2022-05-18",
+    "department": null,
+    "active": true
+  },
+  {
+    "id": 7,
+    "name": "Frank Miller",
+    "age": 78,
+    "salary": null,
+    "hire_date": "2023-09-30",
+    "department": "Sales",
+    "active": "maybe"
+  },
+    {
+    "id": 7,
+    "name": "Frank Miller",
+    "age": 78,
+    "salary": null,
+    "hire_date": "2023-09-30",
+    "department": "Sales",
+    "active": "maybe"
+  }
+]

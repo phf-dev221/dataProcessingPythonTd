@@ -1,16 +1,7 @@
-Environment variables
-Never commit this file! It contains secrets.
-.env
-
-Virtual Environment
-This folder contains all the installed packages and is specific to your machine.
-venv/
-.venv/
-
-Python cache files
-pycache/
+uploads/
+src/
+env/
+__pycache__/
 *.pyc
-
-IDE configuration files
-.vscode/
-.idea/
+.env
+.venv

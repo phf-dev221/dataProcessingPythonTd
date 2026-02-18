@@ -1,4 +1,9 @@
+flask-jwt-extended
+flask-cors
 Flask
 pandas
 python-dotenv
 pytest
+flask-sqlalchemy
+flask-migrate
+pymysql
