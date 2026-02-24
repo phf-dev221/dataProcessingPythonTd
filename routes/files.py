@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from database import db
 from models import History
 from models.user import User
-from services.file_service import load_file, process_dataframe, convert_file
+from services.file_service import load_file, process_dataframe, convert_file, analyze_dataframe
 
 files_bp = Blueprint("files", __name__)
 
@@ -23,16 +23,18 @@ def upload_file():
 
     try:
         df = load_file(file)
+
+        # ── Diagnostic AVANT nettoyage ──────────────────────────
+        diagnostic = analyze_dataframe(df)
+
         cleaned_df, rows_cleaned = process_dataframe(df)
         rows_cleaned = int(rows_cleaned)
 
-        # 🔥 récupérer user connecté
         user_id = get_jwt_identity()
         user = db.session.get(User, user_id)
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # 🔥 mettre à jour stats
         user.totalFilesProcessed += 1
         user.totalRowsCleaned += rows_cleaned
 
@@ -45,19 +47,40 @@ def upload_file():
         db.session.add(history)
         db.session.commit()
 
-
         return jsonify({
             "message": "File processed successfully",
             "rows_cleaned": rows_cleaned,
             "total_files_processed": user.totalFilesProcessed,
             "total_rows_cleaned": user.totalRowsCleaned,
-            "data_preview": cleaned_df.head(20).to_dict(orient="records")
+            "data_preview": cleaned_df.head(20).to_dict(orient="records"),
+            "diagnostic": diagnostic,           # <── stats avant/après
         })
 
     except Exception as e:
         traceback.print_exc()
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
+
+@files_bp.route("/diagnose", methods=["POST"])
+@jwt_required()
+def diagnose_file():
+    """
+diagnoz ici
+    """
+    if 'file' not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+
+    file = request.files['file']
+
+    try:
+        df = load_file(file)
+        diagnostic = analyze_dataframe(df)
+        return jsonify(diagnostic)
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
 
 @files_bp.route("/download", methods=["POST"])
 @jwt_required()
@@ -96,11 +119,10 @@ def download_cleaned():
         return send_file(output, mimetype=mimetype, as_attachment=True, download_name=download_name)
 
     except Exception as e:
-        import traceback
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
-#conversion de fichiers
+
 @files_bp.route("/convert", methods=["POST"])
 @jwt_required()
 def convert():
@@ -115,7 +137,7 @@ def convert():
 
     valid_types = [
         'csv-to-excel', 'excel-to-json', 'csv-to-json',
-        'json-to-csv', 'excel-to-csv'
+        'json-to-csv', 'excel-to-csv', 'json-to-excel'
     ]
     if conversion_type not in valid_types:
         return jsonify({"error": "Invalid conversion type"}), 400
@@ -123,7 +145,6 @@ def convert():
     try:
         output, mimetype, filename = convert_file(file, conversion_type)
 
-        # Stats user
         user_id = get_jwt_identity()
         user = db.session.get(User, user_id)
         user.totalFilesProcessed = int(user.totalFilesProcessed or 0) + 1
@@ -147,7 +168,6 @@ def convert():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        import traceback
         traceback.print_exc()
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
