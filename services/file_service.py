@@ -101,6 +101,8 @@ def load_file(file):
         return pd.read_excel(file, engine="openpyxl")
     elif extension == 'json':
         return pd.read_json(file)
+    elif extension == 'xml':
+        return pd.read_xml(io.BytesIO(file.read()))
     else:
         raise ValueError("Unsupported file format")
 
@@ -293,6 +295,8 @@ def convert_file(file, conversion_type):
         df = pd.read_excel(file, engine="openpyxl")
     elif extension == 'json':
         df = pd.read_json(file)
+    elif extension == 'xml':
+        df = pd.read_xml(io.BytesIO(file.read()))
     else:
         raise ValueError("Unsupported input file format")
 

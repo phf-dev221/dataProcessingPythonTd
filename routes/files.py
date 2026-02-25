@@ -137,7 +137,8 @@ def convert():
 
     valid_types = [
         'csv-to-excel', 'excel-to-json', 'csv-to-json',
-        'json-to-csv', 'excel-to-csv', 'json-to-excel'
+        'json-to-csv', 'excel-to-csv', 'json-to-excel',
+        'xml-to-csv', 'xml-to-json', 'xml-to-excel'
     ]
     if conversion_type not in valid_types:
         return jsonify({"error": "Invalid conversion type"}), 400

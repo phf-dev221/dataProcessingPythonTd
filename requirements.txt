@@ -10,3 +10,4 @@ pymysql
 gunicorn
 psycopg2-binary
 openpyxl
+lxml
