@@ -9,7 +9,7 @@ def _is_numeric(v):
     try:
         float(str(v))
         return True
-    except (ValueError, TypeError):
+    except(ValueError, TypeError):
         return False
 
 
