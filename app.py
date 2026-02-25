@@ -33,7 +33,8 @@ CORS(
         r"/*": {
             "origins": [
                 "http://localhost:5173",
-                "https://dataprocessingpythontd.onrender.com"
+                "https://dataprocessingpythontd.onrender.com",
+                "https://datablist.terangacode.com"
             ]
         }
     },
