@@ -159,6 +159,18 @@ def analyze_dataframe(df):
             col_info["max"]      = round(float(numeric.max()), 2) if not numeric.isna().all() else None
             col_info["mean"]     = round(float(mean_val), 2)      if not numeric.isna().all() else None
 
+        if col_type == "datetime":
+            col_type, converted_dates = detect_column_type(df[col])
+            # ne pas stocker de Timestamp dans col_info, tout en string
+            col_info["sample_date_range"] = None
+            try:
+                valid = pd.to_datetime(df[col], errors='coerce').dropna()
+                if not valid.empty:
+                    col_info["min"] = str(valid.min().date())
+                    col_info["max"] = str(valid.max().date())
+            except:
+                pass
+
         columns_info.append(col_info)
 
     completeness = round((1 - total_missing / total_cells) * 100, 1) if total_cells > 0 else 100
@@ -242,7 +254,10 @@ def process_dataframe(df):
             else:
                 median_date = pd.Timestamp("1900-01-01")
 
-            df.loc[:, col] = converted.fillna(median_date)
+            filled = converted.fillna(median_date)
+
+            # ici on essai donc de Convertir en string pour éviter les erreurs de sérialisation JSON
+            df.loc[:, col] = filled.dt.strftime('%Y-%m-%d')
 
         # ── TEXT ─────────────────────────────────────────────────────────────
         else:
