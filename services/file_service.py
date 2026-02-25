@@ -45,7 +45,7 @@ def detect_column_type(data, threshold=0.7):
     numeric    = pd.to_numeric(data, errors='coerce')
     num_ratio  = numeric.notna().sum() / total
 
-    dates      = pd.to_datetime(data, errors='coerce', infer_datetime_format=True)
+    dates = pd.to_datetime(data, errors='coerce')
     date_ratio = dates.notna().sum() / total
 
     if num_ratio >= threshold:
