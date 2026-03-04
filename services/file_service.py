@@ -302,20 +302,21 @@ def convert_file(file, conversion_type):
 
     output = io.BytesIO()
 
-    if conversion_type in ('csv-to-excel', 'json-to-excel'):
+    if conversion_type in ('csv-to-excel', 'json-to-excel', 'xml-to-excel'):
         df.to_excel(output, index=False, engine="openpyxl")
         mimetype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         filename = "converted.xlsx"
 
-    elif conversion_type in ('excel-to-csv', 'json-to-csv'):
+    elif conversion_type in ('excel-to-csv', 'json-to-csv', 'xml-to-csv'):
         df.to_csv(output, index=False)
         mimetype = "text/csv"
         filename = "converted.csv"
 
-    elif conversion_type in ('excel-to-json', 'csv-to-json'):
+    elif conversion_type in ('excel-to-json', 'csv-to-json', 'xml-to-json'):
         output.write(df.to_json(orient="records", indent=2).encode("utf-8"))
         mimetype = "application/json"
         filename = "converted.json"
+
 
     else:
         raise ValueError(f"Unsupported conversion type: {conversion_type}")
