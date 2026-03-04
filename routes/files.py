@@ -47,14 +47,22 @@ def upload_file():
         db.session.add(history)
         db.session.commit()
 
+        preview = cleaned_df.head(20).copy()
+        for c in preview.columns:
+            if preview[c].dtype == object:
+                preview[c] = preview[c].astype(str)
+            elif str(preview[c].dtype) in ('bool', 'boolean'):
+                preview[c] = preview[c].apply(lambda v: 'True' if v else 'False')
+
         return jsonify({
             "message": "File processed successfully",
             "rows_cleaned": rows_cleaned,
             "total_files_processed": user.totalFilesProcessed,
             "total_rows_cleaned": user.totalRowsCleaned,
-            "data_preview": cleaned_df.head(20).to_dict(orient="records"),
-            "diagnostic": diagnostic,           # <── stats avant/après
+            "data_preview": preview.to_dict(orient="records"),
+            "diagnostic": diagnostic,
         })
+
 
     except Exception as e:
         traceback.print_exc()
