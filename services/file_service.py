@@ -94,11 +94,12 @@ def replace_extreme_outliers(series):
 # ── Core ──────────────────────────────────────────────────────────────────────
 
 def load_file(file):
+    NA_VALUES = ['NA', 'na', 'N/A', 'n/a', 'NaN', 'nan', 'NULL', 'null', 'None', 'none', '', ' ']
     extension = file.filename.split('.')[-1].lower()
     if extension == 'csv':
-        return pd.read_csv(file)
-    elif extension == 'xlsx':
-        return pd.read_excel(file, engine="openpyxl")
+        return pd.read_csv(file, na_values=NA_VALUES, keep_default_na=True)
+    elif extension in ('xlsx', 'xls'):
+        return pd.read_excel(io.BytesIO(file.read()), engine='openpyxl', na_values=NA_VALUES, keep_default_na=True)
     elif extension == 'json':
         return pd.read_json(file)
     elif extension == 'xml':
