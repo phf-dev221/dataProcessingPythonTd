@@ -222,6 +222,7 @@ def process_dataframe(df):
             df.loc[:, col] = cleaned.apply(
                 lambda v: normalize_boolean(v) if not pd.isna(v) else fill_bool
             )
+            df.loc[:, col] = df[col].map({True: 'True', False: 'False'})
             continue
 
         col_type, converted = detect_column_type(df[col])
