@@ -49,11 +49,12 @@ def get_chart_data():
     # Construire les 7 jours même si pas d'activité ce jour là
     data = {}
     for r in results:
-        data[r.date] = r.files
+        key = r.date if isinstance(r.date, str) else str(r.date)
+        data[key] = r.files
 
     chart = []
     for i in range(7):
-        day = (seven_days_ago + timedelta(days=i)).isoformat()
+        day = str(seven_days_ago + timedelta(days=i))
         chart.append({"date": day, "files": data.get(day, 0)})
 
     return jsonify(chart)
